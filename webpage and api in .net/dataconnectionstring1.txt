@@ -1,0 +1,15 @@
+procAiservice
+
+<!--dataconnectionstring-->
+
+	"DBContext": "data source=localhost;initial catalog=Proc;Integrated Security=true;"
+
+
+
+
+<!---procurement--->
+
+ jocAPIBaseUrl: 'http://localhost:15194/',
+
+
+  signalrUrl: 'http://localhost:15194/signalr'

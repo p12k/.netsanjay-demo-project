@@ -1,0 +1,63 @@
+PRICEPROPOSALIDETAILSCONTROLLER
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using ProcAIService.Services.Interfaces;
+using ProcAIService.ViewModel.Request;
+
+namespace ProcAIService.Controllers
+{
+
+	//[Authorize]
+	[AllowAnonymous]
+	[ApiController]
+	[ApiVersion("1.0")]
+	[Route("v{version:apiVersion}/[controller]")]
+	public class PriceProposalDetailsController : ControllerBase
+	{
+
+		private readonly IPriceProposalDetailService _proposalDetailService;
+		public PriceProposalDetailsController(IPriceProposalDetailService proposalDetailService)
+		{
+			_proposalDetailService = proposalDetailService;
+		}
+
+		[HttpPost]
+        [Route("GenerateAutoSuggestTasks")]
+		public async Task<IActionResult> GenerateAutoSuggestTasks([FromBody] PriceProposalDetailRequest priceProposalRequest)
+		{
+           var totalRecordInserted = await _proposalDetailService.GenerateAutoSuggestTasks(priceProposalRequest).ConfigureAwait(false);
+			return Ok(totalRecordInserted);
+		}
+        [HttpGet]
+        [Route("{propposalId}/{aiConfidence}")]
+        public IActionResult GetProposalDetailByProposalId(int propposalId, int aiConfidence)
+        {
+            var proposalDetail = _proposalDetailService.GetByProposalIdAndAiConfidenceLevel(propposalId, aiConfidence);
+            return Ok(proposalDetail.Result);
+        }
+		[HttpPost]
+	//	[Route("GenerateAutoReviewTask")]
+		public async Task<IActionResult> GenerateAutoReviewTask([FromBody] PriceProposalDetailRequest priceProposalRequest)
+		{
+			var totalRecordInserted = await _proposalDetailService.GenerateAutoReviewTask(priceProposalRequest).ConfigureAwait(false);
+			return Ok(totalRecordInserted);
+		}
+
+		[HttpGet]
+		[Route("{priceProposalId}")]
+		public  IActionResult GetProposalreviewByProposalId(int priceProposalId)
+		{
+			var proposalDetail = _proposalDetailService.GetByProposalId(priceProposalId);
+			return Ok(proposalDetail.Result);
+		}
+	}
+}

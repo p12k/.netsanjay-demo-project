@@ -1,0 +1,65 @@
+<!--interface Repository-->
+
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using ProcAIService.DomainModel;
+using ProcAIService.ViewModel;
+
+namespace ProcAIService.DataAccess.Repositories.Procurement
+{
+	public interface IPriceProposalRepository
+	{
+		 Task<PriceProposalDetail> CreateAsync(PriceProposalDetail priceProposalDetail);
+        List<PriceProposalDetail> GetByProposalIdAndAiConfidenceLevel(int proposalId, int aiConfidence);
+
+		List<PriceProposalDetail> GetByProposalId(int proposalId);
+	}
+}
+
+
+
+
+
+<!---implementation of interface repository--->
+
+
+
+using ProcAIService.DataAccess.Context;
+using ProcAIService.DomainModel;
+using ProcAIService.ViewModel;
+using ProcAIService.ViewModel.Request;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ProcAIService.DataAccess.Repositories.Procurement
+{
+    public class PriceProposalRepository : Repository<PriceProposalDetail, DataContext>, IPriceProposalRepository
+    {
+        public PriceProposalRepository(DataContext dataContext)
+            : base(dataContext)
+        {
+        }
+        public async Task<PriceProposalDetail> CreateAsync(PriceProposalDetail priceProposalDetail)
+        {
+            return await Add(priceProposalDetail).ConfigureAwait(false);
+        }
+
+        public List<PriceProposalDetail> GetByProposalId(int proposalId)
+        {
+            var listPriceProposalDetailResponse = Queryable().Where(x => x.PriceProposalId == proposalId).ToList();
+            return listPriceProposalDetailResponse;
+        }
+
+        public List<PriceProposalDetail> GetByProposalIdAndAiConfidenceLevel(int proposalId, int aiConfidence)
+        {
+            var listPriceProposalDetailResponse = Queryable().Where(x => x.PriceProposalId == proposalId && x.AIConfidenceLevel != null && x.AIConfidenceLevel >= aiConfidence).ToList();
+            return listPriceProposalDetailResponse;
+        }
+
+    }
+}

@@ -1,0 +1,47 @@
+  {{ (item.AIConfidenceLevel <= range) ? item.AIConfidenceLevel : 55
+        }}%
+
+ let range = this.lineItemsStore.AIConfidenceLevel
+    console.log(range)
+    let newItem = item
+    console.log(item)
+    console.log(newItem)
+    item = newItem.filter(this.searchingFor(range))
+
+
+
+  searchingFor(value) {
+    console.log(value)
+    return function (x) {
+      return (x.aiConfidence >= value) || !value
+
+    }
+  }
+
+
+
+
+
+ searchingFor(value) {
+    console.log(value)
+    return function (x) {
+      return (x.aiConfidence >= value) || !value
+
+    }
+  }
+
+  //////
+  renderAIConfidenceRangeLevel(item) {
+    let range = this.lineItemsStore.AIConfidenceSuggestRange
+    console.log(range)
+    let newItem = item
+    console.log(item)
+    console.log(newItem)
+    item = newItem.filter(this.searchingFor(range))
+  }
+
+
+
+
+
+

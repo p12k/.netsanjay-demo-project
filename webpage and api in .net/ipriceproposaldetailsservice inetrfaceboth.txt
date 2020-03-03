@@ -1,0 +1,123 @@
+
+
+  <!---interface service-->
+
+
+using ProcAIService.DomainModel;
+using ProcAIService.ViewModel;
+using ProcAIService.ViewModel.Request;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ProcAIService.Services.Interfaces
+{
+	public interface IPriceProposalDetailService
+	{
+		Task<List<PriceProposalDetailResponse>> GetByProposalIdAndAiConfidenceLevel(int proposalId, int aiConfidence);
+		Task<int> GenerateAutoSuggestTasks(PriceProposalDetailRequest priceProposalDetail);
+		Task<int> GenerateAutoReviewTask(PriceProposalDetailRequest priceProposalRequest);
+		Task<List<PriceProposalDetailResponse>> GetByProposalId(int propposalId);
+	}
+}
+
+
+
+<!implementation of service inetrface-->
+
+
+
+
+
+using AutoMapper;
+using AutoMapper.Configuration;
+using ProcAIService.Common;
+using ProcAIService.Data;
+using ProcAIService.DataAccess.Context;
+using ProcAIService.DataAccess.Repositories;
+using ProcAIService.DataAccess.Repositories.Procurement;
+using ProcAIService.DomainModel;
+using ProcAIService.Infrastructure.GracieService;
+
+using ProcAIService.Services.Interfaces;
+using ProcAIService.ViewModel;
+using ProcAIService.ViewModel.Request;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ProcAIService.Services
+{
+	public class PriceProposalDetailService : IPriceProposalDetailService
+	{
+		private readonly IPriceProposalRepository _repository;
+		private readonly IGracieAIService _gracieService;
+		private readonly IMapper _mapper;
+		private readonly IMailerCallerService _mailCallerService;
+		public PriceProposalDetailService(
+			IPriceProposalRepository repository,
+			IGracieAIService gracieService,
+			IMapper mapper,
+			IMailerCallerService mailerCallerService
+			)
+		{
+			_repository = repository;
+			_gracieService = gracieService;
+			_mapper = mapper;
+			_mailCallerService = mailerCallerService;
+		}
+
+		public async Task<int> GenerateAutoReviewTask(PriceProposalDetailRequest priceProposalDetailRequest)
+		{
+			var priceProposalDetail = _mapper.Map<PriceProposalDetail>(priceProposalDetailRequest);
+
+			var gracieService = await _gracieService.GetPriceProposalDetails(priceProposalDetail).ConfigureAwait(true);
+			//foreach (PriceProposalDetail ppd in gracieService)
+			//	await _repository.CreateAsync(ppd).ConfigureAwait(false);
+
+			return await Task.FromResult(0).ConfigureAwait(false);
+		}
+
+		public async Task<int> GenerateAutoSuggestTasks(PriceProposalDetailRequest priceProposalDetailRequest)
+		{
+			
+				var priceProposalDetail = _mapper.Map<PriceProposalDetail>(priceProposalDetailRequest);
+
+				var gracieService = await _gracieService.GetPriceProposalDetails(priceProposalDetail).ConfigureAwait(true);
+				foreach (PriceProposalDetail ppd in gracieService)
+					await _repository.CreateAsync(ppd).ConfigureAwait(false);
+
+			 await _mailCallerService.SendPriceProposalAutoSuggestMail(priceProposalDetailRequest).ConfigureAwait(false);
+
+			return await Task.FromResult(gracieService.Count).ConfigureAwait(false);
+		}
+
+		public async Task<List<PriceProposalDetailResponse>> GetByProposalId(int proposalId)
+		{
+			var priceProposalDetailList = _repository.GetByProposalId(proposalId);
+			var priceProposalDetailListResponse = new List<PriceProposalDetailResponse>();
+			//var priceProposalDetailListResponse = _mapper.Map<List<PriceProposalDetailResponse>>(priceProposalDetailList);
+			foreach (var priceProposalDetail in priceProposalDetailList)
+			{
+				priceProposalDetailListResponse.Add(_mapper.Map<PriceProposalDetailResponse>(priceProposalDetail));
+			}
+
+			return priceProposalDetailListResponse;
+		}
+
+		public async Task<List<PriceProposalDetailResponse>> GetByProposalIdAndAiConfidenceLevel(int proposalId, int aiConfidence)
+		{
+			var priceProposalDetailList =  _repository.GetByProposalIdAndAiConfidenceLevel(proposalId, aiConfidence);
+			var priceProposalDetailListResponse = new List<PriceProposalDetailResponse>();
+			//var priceProposalDetailListResponse = _mapper.Map<List<PriceProposalDetailResponse>>(priceProposalDetailList);
+			foreach (var priceProposalDetail in priceProposalDetailList)
+			{
+				priceProposalDetailListResponse.Add(_mapper.Map<PriceProposalDetailResponse>(priceProposalDetail));
+			}
+
+			return priceProposalDetailListResponse;
+		}
+	}
+}

@@ -1,0 +1,128 @@
+﻿@model NewsNew1.Model.DTO.CreateArticleDTO
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Article</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.teaser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.teaser)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.headline)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.headline)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.subtitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.subtitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.byline)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.byline)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lead)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lead)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.content)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.content)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.credit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.credit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.leadImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.leadImage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.leadcaption)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.leadcaption)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.leadcredit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.leadcredit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.createddate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.createddate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Author)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Author)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

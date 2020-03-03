@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="eb3f076f2bd346e583f9f544c091549e" Name="Diagram1">
+        <EntityTypeShape EntityType="NewsDBModel.ArticleCategory" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewsDBModel.Article" Width="1.5" PointX="3" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewsDBModel.ArticleTag" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewsDBModel.Author" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewsDBModel.Category" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="NewsDBModel.Tag" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <AssociationConnector Association="NewsDBModel.FK_ArticleCategories_Articles" ManuallyRouted="false" />
+        <AssociationConnector Association="NewsDBModel.FK_ArticleCategories_Categories1" ManuallyRouted="false" />
+        <AssociationConnector Association="NewsDBModel.FK_Articles_Authors" ManuallyRouted="false" />
+        <AssociationConnector Association="NewsDBModel.FK_ArticleTags_Articles" ManuallyRouted="false" />
+        <AssociationConnector Association="NewsDBModel.FK_ArticleTags_Tags" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

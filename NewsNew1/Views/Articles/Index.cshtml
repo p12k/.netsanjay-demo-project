@@ -1,0 +1,108 @@
+﻿@model IList<NewsNew1.Model.DTO.GetArticleDTO>
+
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault<NewsNew1.Model.DTO.GetArticleDTO>().teaser)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault<NewsNew1.Model.DTO.GetArticleDTO>().headline)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault<NewsNew1.Model.DTO.GetArticleDTO>().subtitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault<NewsNew1.Model.DTO.GetArticleDTO>().byline)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault<NewsNew1.Model.DTO.GetArticleDTO>().lead)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault<NewsNew1.Model.DTO.GetArticleDTO>().content)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault<NewsNew1.Model.DTO.GetArticleDTO>().credit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault<NewsNew1.Model.DTO.GetArticleDTO>().leadImage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault<NewsNew1.Model.DTO.GetArticleDTO>().leadcaption)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault<NewsNew1.Model.DTO.GetArticleDTO>().leadcredit)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault<NewsNew1.Model.DTO.GetArticleDTO>().date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault<NewsNew1.Model.DTO.GetArticleDTO>().createddate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault<NewsNew1.Model.DTO.GetArticleDTO>().authorId)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.teaser)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.headline)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.subtitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.byline)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.lead)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.credit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.leadImage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.leadcaption)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.leadcredit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.createddate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuthorName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>

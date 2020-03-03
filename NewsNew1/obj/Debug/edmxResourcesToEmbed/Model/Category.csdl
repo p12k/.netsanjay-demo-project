@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NewsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ArticleCategory">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="articleId" Type="Int32" />
+    <Property Name="categoryId" Type="Int32" />
+    <NavigationProperty Name="Article" Relationship="Self.FK_ArticleCategories_Articles" FromRole="ArticleCategories" ToRole="Articles" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_ArticleCategories_Categories1" FromRole="ArticleCategories" ToRole="Categories" />
+  </EntityType>
+  <EntityType Name="Article">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="teaser" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="headline" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="subtitle" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="byline" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="lead" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="content" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="credit" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="authorId" Type="Int32" />
+    <Property Name="leadImage" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="leadcaption" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="leadcredit" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="date" Type="DateTime" Precision="0" />
+    <Property Name="createddate" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="ArticleCategories" Relationship="Self.FK_ArticleCategories_Articles" FromRole="Articles" ToRole="ArticleCategories" />
+    <NavigationProperty Name="Author" Relationship="Self.FK_Articles_Authors" FromRole="Articles" ToRole="Authors" />
+    <NavigationProperty Name="ArticleTags" Relationship="Self.FK_ArticleTags_Articles" FromRole="Articles" ToRole="ArticleTags" />
+  </EntityType>
+  <EntityType Name="ArticleTag">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="articleId" Type="Int32" />
+    <Property Name="tagId" Type="Int32" />
+    <NavigationProperty Name="Article" Relationship="Self.FK_ArticleTags_Articles" FromRole="ArticleTags" ToRole="Articles" />
+    <NavigationProperty Name="Tag" Relationship="Self.FK_ArticleTags_Tags" FromRole="ArticleTags" ToRole="Tags" />
+  </EntityType>
+  <EntityType Name="Author">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="dob" Type="DateTime" Precision="0" />
+    <Property Name="qualification" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="profession" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Articles" Relationship="Self.FK_Articles_Authors" FromRole="Authors" ToRole="Articles" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="displayname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="isDeleted" Type="Boolean" />
+    <NavigationProperty Name="ArticleCategories" Relationship="Self.FK_ArticleCategories_Categories1" FromRole="Categories" ToRole="ArticleCategories" />
+  </EntityType>
+  <EntityType Name="Tag">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tags" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ArticleTags" Relationship="Self.FK_ArticleTags_Tags" FromRole="Tags" ToRole="ArticleTags" />
+  </EntityType>
+  <Association Name="FK_ArticleCategories_Articles">
+    <End Role="Articles" Type="Self.Article" Multiplicity="0..1" />
+    <End Role="ArticleCategories" Type="Self.ArticleCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Articles">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ArticleCategories">
+        <PropertyRef Name="articleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArticleCategories_Categories1">
+    <End Role="Categories" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="ArticleCategories" Type="Self.ArticleCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categories">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ArticleCategories">
+        <PropertyRef Name="categoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Articles_Authors">
+    <End Role="Authors" Type="Self.Author" Multiplicity="0..1" />
+    <End Role="Articles" Type="Self.Article" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Authors">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Articles">
+        <PropertyRef Name="authorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArticleTags_Articles">
+    <End Role="Articles" Type="Self.Article" Multiplicity="0..1" />
+    <End Role="ArticleTags" Type="Self.ArticleTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Articles">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ArticleTags">
+        <PropertyRef Name="articleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ArticleTags_Tags">
+    <End Role="Tags" Type="Self.Tag" Multiplicity="0..1" />
+    <End Role="ArticleTags" Type="Self.ArticleTag" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tags">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ArticleTags">
+        <PropertyRef Name="tagId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="NewsDBEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ArticleCategories" EntityType="Self.ArticleCategory" />
+    <EntitySet Name="Articles" EntityType="Self.Article" />
+    <EntitySet Name="ArticleTags" EntityType="Self.ArticleTag" />
+    <EntitySet Name="Authors" EntityType="Self.Author" />
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="Tags" EntityType="Self.Tag" />
+    <AssociationSet Name="FK_ArticleCategories_Articles" Association="Self.FK_ArticleCategories_Articles">
+      <End Role="Articles" EntitySet="Articles" />
+      <End Role="ArticleCategories" EntitySet="ArticleCategories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArticleCategories_Categories1" Association="Self.FK_ArticleCategories_Categories1">
+      <End Role="Categories" EntitySet="Categories" />
+      <End Role="ArticleCategories" EntitySet="ArticleCategories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Articles_Authors" Association="Self.FK_Articles_Authors">
+      <End Role="Authors" EntitySet="Authors" />
+      <End Role="Articles" EntitySet="Articles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArticleTags_Articles" Association="Self.FK_ArticleTags_Articles">
+      <End Role="Articles" EntitySet="Articles" />
+      <End Role="ArticleTags" EntitySet="ArticleTags" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ArticleTags_Tags" Association="Self.FK_ArticleTags_Tags">
+      <End Role="Tags" EntitySet="Tags" />
+      <End Role="ArticleTags" EntitySet="ArticleTags" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

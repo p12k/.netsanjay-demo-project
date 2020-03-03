@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\NewsAngular",
+    "\\NewsAPIs",
+    "\\NewsAPIs\\App_Start",
+    "\\NewsAPIs\\Views",
+    "\\NewsAPIs\\Views\\Shared",
+    "\\NewsModels",
+    "\\NewsPooja\\Models"
+  ],
+  "SelectedNode": "\\NewsAPIs\\Views\\Shared\\_Layout.cshtml",
+  "PreviewInSolutionExplorer": false
+}
